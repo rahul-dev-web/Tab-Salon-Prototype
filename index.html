@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tab Salon — appointment booking prototype" />
+  <title>Tab Salon — Booking Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" onclick="showPage('home'); return false;"><span class="brand-mark">TS</span><span><b>Tab</b> Salon</span></a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#book" onclick="showPage('booking');">Book</a>
+      <a href="#about">About</a>
+    </nav>
+    <button class="header-book" onclick="showPage('booking')">Book appointment <span>↗</span></button>
+  </header>
+
+  <main id="app">
+    <section id="home-page" class="page">
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="dot"></span> Raipur · Open today 9 AM–8 PM</div>
+          <h1>Good hair.<br><em>Better appointment.</em></h1>
+          <p>A modern salon experience without the waiting room. Pick your service, choose a time, and you're booked.</p>
+          <div class="hero-actions">
+            <button class="btn primary" onclick="showPage('booking')">Book an appointment <span>→</span></button>
+            <a class="text-link" href="#services">Explore services ↓</a>
+          </div>
+          <div class="trust-row"><span>★ 4.9</span><span>·</span><span>500+ happy clients</span><span>·</span><span>Walk-ins welcome</span></div>
+        </div>
+        <div class="hero-visual">
+          <div class="photo-card">
+            <div class="salon-art"><span>TS</span></div>
+            <div class="floating-card"><span class="mini-icon">✓</span><div><strong>Next opening</strong><small>Today · 11:30 AM</small></div></div>
+          </div>
+        </div>
+      </div>
+
+      <section id="services" class="section">
+        <div class="section-head"><div><span class="kicker">WHAT WE DO</span><h2>Services, made simple.</h2></div><span class="muted">Transparent pricing · No surprises</span></div>
+        <div class="service-grid">
+          <article class="service-card"><div class="service-no">01</div><div><h3>Classic Haircut</h3><p>Clean cut, wash & styling</p></div><strong>₹299</strong><small>30 min</small></article>
+          <article class="service-card"><div class="service-no">02</div><div><h3>Haircut + Beard</h3><p>Cut, trim & finishing</p></div><strong>₹499</strong><small>45 min</small></article>
+          <article class="service-card"><div class="service-no">03</div><div><h3>Hair Spa</h3><p>Relaxing scalp treatment</p></div><strong>₹699</strong><small>60 min</small></article>
+          <article class="service-card"><div class="service-no">04</div><div><h3>Beard Styling</h3><p>Shape, trim & finish</p></div><strong>₹199</strong><small>20 min</small></article>
+        </div>
+      </section>
+
+      <section id="about" class="split-section">
+        <div><span class="kicker">THE EXPERIENCE</span><h2>Come in relaxed.<br>Leave feeling sharper.</h2></div>
+        <div><p>Appointment-first booking keeps your time predictable while still welcoming walk-in customers.</p><button class="text-link" onclick="showPage('booking')">Find a time →</button></div>
+      </section>
+    </section>
+
+    <section id="booking-page" class="page hidden">
+      <div class="booking-wrap">
+        <div class="booking-intro"><span class="kicker">APPOINTMENT</span><h1>Reserve your chair.</h1><p>Choose a service and time. We'll keep your appointment on the calendar.</p></div>
+        <div class="booking-layout">
+          <div class="booking-panel">
+            <div class="step"><span>01</span><div><label>Choose service</label><div class="choice-grid" id="serviceChoices"></div></div></div>
+            <div class="step"><span>02</span><div><label>Select date</label><div class="date-row" id="dateChoices"></div></div></div>
+            <div class="step"><span>03</span><div><label>Available times</label><div class="time-grid" id="timeChoices"></div><small class="availability-note">Slots shown are appointment availability. Walk-ins are managed by the salon team.</small></div></div>
+            <div class="step"><span>04</span><div><label>Your details</label><div class="form-grid"><input id="customerName" placeholder="Full name" /><input id="customerPhone" placeholder="Mobile number" inputmode="numeric" /></div></div></div>
+            <button class="btn primary full" onclick="confirmBooking()">Confirm appointment <span>→</span></button>
+          </div>
+          <aside class="summary-card">
+            <span class="kicker">YOUR APPOINTMENT</span>
+            <div class="summary-service" id="summaryService">Classic Haircut</div>
+            <div class="summary-row"><span>Date</span><strong id="summaryDate">Today</strong></div>
+            <div class="summary-row"><span>Time</span><strong id="summaryTime">10:00 AM</strong></div>
+            <div class="summary-row"><span>Duration</span><strong id="summaryDuration">30 min</strong></div>
+            <div class="summary-total"><span>Total</span><strong id="summaryPrice">₹299</strong></div>
+            <p class="tiny">No customer account required. Your mobile number is used for appointment contact.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="success-page" class="page hidden">
+      <div class="success-card">
+        <div class="success-icon">✓</div><span class="kicker">BOOKING CONFIRMED</span>
+        <h1>You're on the calendar.</h1><p>We've reserved your appointment. In a production version, a confirmation would also be sent to your mobile/WhatsApp.</p>
+        <div class="ticket" id="ticket"></div>
+        <button class="btn primary" onclick="showPage('home')">Back to salon</button>
+      </div>
+    </section>
+
+    <section id="admin-page" class="page hidden">
+      <div class="admin-wrap">
+        <div class="admin-top"><div><span class="kicker">SALON ADMIN</span><h1>Good morning, team.</h1><p>Manage today's appointments and walk-ins from one place.</p></div><button class="btn dark" onclick="showPage('booking')">View customer booking ↗</button></div>
+        <div class="stats"><div><span>Today's appointments</span><strong>08</strong><small>+2 vs yesterday</small></div><div><span>Upcoming</span><strong>05</strong><small>Next at 10:30 AM</small></div><div><span>Walk-ins</span><strong>03</strong><small>2 currently active</small></div><div><span>Open chairs</span><strong>02/04</strong><small>Live status</small></div></div>
+        <div class="admin-grid">
+          <div class="table-card"><div class="card-head"><div><span class="kicker">TODAY · 22 SEP</span><h2>Appointment queue</h2></div><button class="outline-btn">+ Block slot</button></div>
+            <div class="appointment" id="a1"><span class="appt-time">10:00</span><div class="avatar">RK</div><div class="appt-info"><strong>Rohan Kumar</strong><small>Classic Haircut · 30 min</small></div><span class="status confirmed">Confirmed</span><button onclick="toggleStatus('a1',this)">Check in</button></div>
+            <div class="appointment"><span class="appt-time">10:30</span><div class="avatar dark-avatar">AS</div><div class="appt-info"><strong>Walk-in · Amit S.</strong><small>Haircut + Beard · 45 min</small></div><span class="status live">In service</span><button onclick="alert('Walk-in is currently active. 11:00 appointment reminder should be handled by the salon team.')">Manage</button></div>
+            <div class="appointment"><span class="appt-time">11:00</span><div class="avatar">PK</div><div class="appt-info"><strong>Priya Kapoor</strong><small>Hair Spa · 60 min</small></div><span class="status confirmed">Confirmed</span><button onclick="toggleStatus('a3',this)" id="a3">Check in</button></div>
+            <div class="appointment"><span class="appt-time">11:30</span><div class="avatar">SM</div><div class="appt-info"><strong>Simran Mehta</strong><small>Beard Styling · 20 min</small></div><span class="status pending">Pending</span><button onclick="alert('Reminder sent in the production version.')">Remind</button></div>
+          </div>
+          <div class="side-card"><span class="kicker">LIVE OPERATIONS</span><h2>Chair status</h2><div class="chair"><span class="chair-dot busy"></span><div><strong>Chair 01</strong><small>Amit S. · until ~11:15</small></div><b>Busy</b></div><div class="chair"><span class="chair-dot free"></span><div><strong>Chair 02</strong><small>Available now</small></div><b>Open</b></div><div class="chair"><span class="chair-dot busy"></span><div><strong>Chair 03</strong><small>Rohan K. · until 10:30</small></div><b>Busy</b></div><div class="ops-note">⚡ If a walk-in may affect an upcoming appointment, the salon team can see the conflict here and contact the customer.</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>© 2026 Tab Salon</span><span>Appointment booking prototype · Customer + Admin flow</span><a href="#" onclick="showPage('admin'); return false;">Demo Admin</a></footer>
+  <script src="./app.js"></script>
+</body>
+</html>
